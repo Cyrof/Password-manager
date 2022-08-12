@@ -18,6 +18,7 @@ After you are done with your code, create a pull request and i will validate it 
 # Menu
 #### Before the main function you will have to create a validation and creation function for the creation of master password and validating subsequent login.<br>
 #### Main function to note is the menu function which will continuously prompt the user until user input a certain input to stop the program.<br>
+#### All functions that is provided has already been documented for you.
 
 ## Expected output will be as such
 ![Expected output](https://github.com/Cyrof/Password-manager/blob/main/image.png)
