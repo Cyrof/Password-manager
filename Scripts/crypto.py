@@ -1,4 +1,3 @@
-from distutils.sysconfig import get_makefile_filename
 from cryptography.fernet import Fernet
 from dotenv import load_dotenv, find_dotenv, set_key, unset_key
 import os
