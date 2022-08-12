@@ -1,5 +1,6 @@
 import sqlite3
 
+# the create table query for sqlite
 create_table_sql = """ CREATE TABLE IF NOT EXISTS password_manager (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     service_name VARCHAR NOT NULL,
@@ -7,7 +8,13 @@ create_table_sql = """ CREATE TABLE IF NOT EXISTS password_manager (
     password VARCHAR NOT NULL
     );"""
 
+# Database class 
 class DB:
+    """ Instance function to run when class is called
+    :var self.__path: path of db
+    :self.__conn: create connection to db
+    :if else: check if self.__conn exist then create table
+    """
     def __init__(self):
         self.__path = r"password.db"
         self.__conn = self.create_connection(self.__path)
