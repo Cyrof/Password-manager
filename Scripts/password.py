@@ -107,15 +107,15 @@ class PS:
                 case '1':
                     self.add_ps()
                 case '2':
-                    print('2')
+                    self.update_ps_menu()
                 case '3':
-                    print('3')
+                    self.get_pass()
                 case '4':
-                    print('4')
+                    self.delete_pass()
                 case '5':
-                    print('5')
+                    self.delete_all_pass()
                 case '6':
-                    print('6')
+                    self.delete_all()
                 case 'exit':
                     break
                 case _:
@@ -132,16 +132,21 @@ class PS:
         password = None
         print("\n")
         while True:
+            print(colored("\n\t*Enter 'exit' at any point to exit.*\n", 'magenta'))
             if service_name is None:
                 try:
                     service_name = input("Enter name of service: ")
                     if service_name == "":
                         service_name = None
+                    if service_name == "exit":
+                        break
                 except:
                     continue
             elif username is None:
                 try:
                     username = input("Enter username for service (optional)[enter to continue]: ")
+                    if username == "exit":
+                        break
                 except:
                     continue
             elif password is None:
@@ -149,18 +154,25 @@ class PS:
                     password = getpass.getpass("Enter password for the service: ")
                     if password == "":
                         password = None
+                    if password == "exit":
+                        break
                 except:
                     continue
-            elif password is not None:
+            elif password is not None and password != "exit":
                 try:
-                    if self.ps_validation(mps=password):
+                    validation = self.ps_validation(mps=password)
+                    if validation == True:
+                        break
+                    elif validation == "exit":
+                        password = None
                         break
                 except:
                     continue
             else:
                 break
         
-        self.__db.insertVarIntoTable(serviceName=service_name, username=username, password=self.__crypto.encrypt(password))
+        if service_name is not None and password is not None and password != "exit":
+            self.__db.insertVarIntoTable(serviceName=service_name, username=username, password=self.__crypto.encrypt(password))
 
     
     def ps_validation(self, **kwargs):
@@ -173,27 +185,162 @@ class PS:
             if kwargs['mps'] == verify_ps:
                 print(colored("Thank you! The password is now saved into the vault.", 'green'))
                 return True
+            elif verify_ps == "exit":
+                return verify_ps
             else:
                 print(colored("X Password does not match X", 'red'))
                 return False
     
-    def display_service(self, **kwargs):
+    def display_all_service(self, **kwargs):
         """ display all service from database
         :param **kwargs: keyword arguments
         :return:
         """
         if kwargs["data"]:
-            print(kwargs['data'])
+            datas = kwargs["data"]
+            datas = [data[:-1] for data in datas]
+            p_table = PrettyTable()
+            p_table.field_names = ["Id", "Service Name", "Username"]
+            p_table.add_rows(datas)
+            print("\n")
+            print(p_table)
+    
+    def display_service(self, **kwargs):
+        """ display service from database from id
+        :param **kwargs: keyword arguments
+        :return:
+        """
+        if kwargs['data']:
+            datas = kwargs["data"]
+            datas = list(datas[0])
+            datas[-1] = self.__crypto.decrypt(datas[-1])
+            p_table = PrettyTable()
+            p_table.field_names = ["Id", "Service Name", "Username", "Password"]
+            p_table.add_rows([datas])
+            print(p_table)
                 
-    def update_ps(self):
-        """ Update password data in database
+    # update choice redo 
+    def update_ps_menu(self):
+        """ Update password menu
         :param:
         :return:
         """
-        self.display_service(data=self.__db.get_all_data())
+        while True:
+            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+            self.display_all_service(data=self.__db.get_all_data())
+            try:
+                choice = input("Enter id of service name to update password: ")
+                if choice == "exit":
+                    break
+                if choice.isdigit():
+                    self.display_service(data=self.__db.get_data_by_id(int(choice)))
+                    print("test 1")
+                    self.update_ps(data=self.__db.get_data_by_id(int(choice)))
+                    print("test 2")
+                    break
+            except:
+                continue
+    def update_ps(self, **kwargs):
+        """ Update password data from database
+        :param kwargs: keyword arguments
+        :return:
+        """
+        print("test")
+        if kwargs['data']:
+            datas = kwargs["data"]
+            datas = list(datas[0])
+            service_name = datas[1]
+            username = datas[2]
+            ps = datas[3]
+        while True:
+            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+            print("1) Service Name")
+            print("2) Username")
+            print("3) Password")
+            print("4) Confirm to update")
+            try:
+                choice = input("Enter a choice: ")
+            except:
+                print(colored("An error occured. Please try again", 'red'))
+                continue
+            
+            match choice:
+                case '1':
+                    service_name = input("Enter Service Name to change: ")
+                case '2':
+                    username = input("Enter Username to change: ")
+                case '3':
+                    ps = input("Enter Password to change: ")
+                    ps = self.__crypto.encrypt(ps)
+                case '4':
+                    datas = [datas[0], service_name, username, ps]
+                    self.__db.update_data(datas)
+                    break
+                case 'exit':
+                    break
+                case _:
+                    print(colored("X Command not recognized X", 'red'))
 
+
+    def get_pass(self):
+        """ Retrieve password 
+        :param:
+        :return:
+        """
+        while True:
+            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+            self.display_all_service(data=self.__db.get_all_data())
+            try:
+                choice = input("Enter id of service name to get password: ")
+                if choice == "exit":
+                    break
+                if choice.isdigit():
+                    self.display_service(data=self.__db.get_data_by_id(int(choice)))
+                    break
+            except:
+                continue
     
+    def delete_pass(self):
+        """ Delete password
+        :param:
+        :return:
+        """
+        while True:
+            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+            self.display_all_service(data=self.__db.get_all_data())
+            try:
+                choice = input("Enter id of service name to delete password: ")
+                if choice == "exit":
+                    break
+                if choice.isdigit():
+                    # create delete by id on db.py
+                    break
+            except:
+                continue
+    
+    def delete_all_pass(self):
+        """ delete all data from db
+        :param:
+        :return:
+        """
+        choice= input(colored("Are you sure you want to delete all password datas? [y/n]: ", 'red'))
+        if choice.lower() == 'y':
+            self.__db.delete_all()
+        if choice.lower() == 'n':
+            pass
+
         
+    def delete_all(self):
+        """ Delete all
+        :param:
+        :return:
+        """
+        choice = input(colored("Are you sure you want to delete all data including master password? [y/n]: ", 'red'))
+        if choice.lower() == 'y':
+            self.__db.delete_all()
+            self.__crypto.clear_dotenv()
+        if choice.lower() == 'n':
+            pass
 
 if __name__ == "__main__":
     program = PS()

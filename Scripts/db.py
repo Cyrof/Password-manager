@@ -134,8 +134,26 @@ class DB:
             print("Failed to read data from table", e)
             return None
     
+    def update_data(self, **kwargs):
+        """ Update data by id
+        :param **kwargs: keyword arguments
+        :return:
+        """
+        try:
+            if kwargs:
+                update_query = """ UPDATE password_manager SET service_name=?, username=?, password=? WHERE id=?"""
+                data_tuple = (kwargs[1], kwargs[2], kwargs[3], kwargs[0])
+
+                cur = self.__conn.cursor()
+                cur.execute(update_query, data_tuple)
+                self.__conn.commit()
+        except sqlite3.Error as e:
+            print("Failed to update data to table", e)
+            return None
+        
+    
 if __name__ == "__main__":
     db = DB()
     # db.delete_table()
     # db.insertVarIntoTable("youtube", "cyrof", "ps")
-    # db.delete_all()
+    db.delete_all()
