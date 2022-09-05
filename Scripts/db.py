@@ -4,7 +4,7 @@ import sqlite3
 create_table_sql = """ CREATE TABLE IF NOT EXISTS password_manager (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     service_name VARCHAR NOT NULL,
-    username VARCHAR NOT NULL,
+    username VARCHAR,
     password VARCHAR NOT NULL
     );"""
 
@@ -38,6 +38,7 @@ class DB:
             print(e)
         
         return conn
+        
     def create_table(self, conn, create_sql_table):
         """ create a table from the create_sql_table param
         :param conn: Connection object
@@ -71,7 +72,7 @@ class DB:
         except Exception as e:
             print(e)
     
-    def delete_all_task(self):
+    def delete_all(self):
         """
         Delete all tasks in the tasks table
         :return:
@@ -83,7 +84,7 @@ class DB:
             cur.execute(sql)
             cur.execute(sql2)
             self.__conn.commit()
-            print("All Tasks deleted")
+            print("All items deleted")
         except Exception as e:
             print(e)
 
@@ -136,4 +137,5 @@ class DB:
 if __name__ == "__main__":
     db = DB()
     # db.delete_table()
-    db.insertVarIntoTable("youtube", "cyrof", "ps")
+    # db.insertVarIntoTable("youtube", "cyrof", "ps")
+    # db.delete_all()

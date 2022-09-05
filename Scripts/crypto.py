@@ -128,8 +128,9 @@ class Crypt:
 
 if __name__ == "__main__":
     c = Crypt()
-    ps = "hello"
-    e_ps = c.encrypt(ps)
-    print(ps)
-    print(e_ps)
-    print(c.decrypt(e_ps))
+    # ps = "hello"
+    # e_ps = c.encrypt(ps)
+    # print(ps)
+    # print(e_ps)
+    # print(c.decrypt(e_ps))
+    c.clear_dotenv()
