@@ -218,6 +218,17 @@ class PS:
             p_table.field_names = ["Id", "Service Name", "Username", "Password"]
             p_table.add_rows([datas])
             print(p_table)
+    
+    def check_db(self):
+        """ Check database if there is any data
+        :param:
+        :return bool: return bool if data exist
+        """
+        datas = self.__db.get_all_data()
+        if not datas:
+            return False
+        else:
+            return True
                 
     # update choice redo 
     def update_ps_menu(self):
@@ -225,21 +236,22 @@ class PS:
         :param:
         :return:
         """
-        while True:
-            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
-            self.display_all_service(data=self.__db.get_all_data())
-            try:
-                choice = input("Enter id of service name to update password: ")
-                if choice == "exit":
-                    break
-                if choice.isdigit():
-                    self.display_service(data=self.__db.get_data_by_id(int(choice)))
-                    print("test 1")
-                    self.update_ps(data=self.__db.get_data_by_id(int(choice)))
-                    print("test 2")
-                    break
-            except:
-                continue
+        if self.check_db():
+            while True:
+                print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+                self.display_all_service(data=self.__db.get_all_data())
+                try:
+                    choice = input("Enter id of service name to update password: ")
+                    if choice == "exit":
+                        break
+                    if choice.isdigit():
+                        self.display_service(data=self.__db.get_data_by_id(int(choice)))
+                        self.update_ps(data=self.__db.get_data_by_id(int(choice)))
+                        break
+                except:
+                    continue
+        else:
+            print(colored("\nError no data in database", 'red'))
     def update_ps(self, **kwargs):
         """ Update password data from database
         :param kwargs: keyword arguments
@@ -274,7 +286,8 @@ class PS:
                     ps = self.__crypto.encrypt(ps)
                 case '4':
                     datas = [datas[0], service_name, username, ps]
-                    self.__db.update_data(datas)
+                    print(datas)
+                    self.__db.update_data(data=datas)
                     break
                 case 'exit':
                     break
@@ -287,47 +300,61 @@ class PS:
         :param:
         :return:
         """
-        while True:
-            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
-            self.display_all_service(data=self.__db.get_all_data())
-            try:
-                choice = input("Enter id of service name to get password: ")
-                if choice == "exit":
-                    break
-                if choice.isdigit():
-                    self.display_service(data=self.__db.get_data_by_id(int(choice)))
-                    break
-            except:
-                continue
+        if self.check_db():
+            while True:
+                    print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+                    self.display_all_service(data=self.__db.get_all_data())
+                    try:
+                        choice = input("Enter id of service name to get password: ")
+                        if choice == "exit":
+                            break
+                        if choice.isdigit():
+                            self.display_service(data=self.__db.get_data_by_id(int(choice)))
+                            break
+                    except:
+                        continue
+        else:
+            print(colored("\nError no data in database", 'red'))
     
     def delete_pass(self):
         """ Delete password
         :param:
         :return:
         """
-        while True:
-            print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
-            self.display_all_service(data=self.__db.get_all_data())
-            try:
-                choice = input("Enter id of service name to delete password: ")
-                if choice == "exit":
-                    break
-                if choice.isdigit():
-                    # create delete by id on db.py
-                    break
-            except:
-                continue
+        if self.check_db():
+            while True:
+                print(colored("\n\t*Enter 'exit' at any point to exit.*", 'magenta'))
+                self.display_all_service(data=self.__db.get_all_data())
+                try:
+                    choice = input("Enter id of service name to delete password: ")
+                    if choice == "exit":
+                        break
+                    if choice.isdigit():
+                        # create delete by id on db.py
+                        # self.__db.delete_by_id(id=int(choice))
+                        try:
+                            self.__db.delete_by_id(id=int(choice))
+                        except Exception as e:
+                            print("An error has occured.", e)
+                        break
+                except:
+                    continue
+        else:
+            print(colored("\nError no data in database", 'red'))
     
     def delete_all_pass(self):
         """ delete all data from db
         :param:
         :return:
         """
-        choice= input(colored("Are you sure you want to delete all password datas? [y/n]: ", 'red'))
-        if choice.lower() == 'y':
-            self.__db.delete_all()
-        if choice.lower() == 'n':
-            pass
+        if self.check_db():
+            choice= input(colored("\nAre you sure you want to delete all password datas? [y/n]: ", 'red'))
+            if choice.lower() == 'y':
+                self.__db.delete_all()
+            if choice.lower() == 'n':
+                pass
+        else:
+            print(colored("\nError no data in database", 'red'))
 
         
     def delete_all(self):
@@ -335,10 +362,12 @@ class PS:
         :param:
         :return:
         """
-        choice = input(colored("Are you sure you want to delete all data including master password? [y/n]: ", 'red'))
+        choice = input(colored("\nAre you sure you want to delete all data including master password? [y/n]: ", 'red'))
         if choice.lower() == 'y':
             self.__db.delete_all()
             self.__crypto.clear_dotenv()
+            print(colored("\nThank you for using our services. Goodbye", 'magenta'))
+            exit()
         if choice.lower() == 'n':
             pass
 

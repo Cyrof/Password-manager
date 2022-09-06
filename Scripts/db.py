@@ -140,15 +140,33 @@ class DB:
         :return:
         """
         try:
-            if kwargs:
+            if kwargs['data']:
                 update_query = """ UPDATE password_manager SET service_name=?, username=?, password=? WHERE id=?"""
-                data_tuple = (kwargs[1], kwargs[2], kwargs[3], kwargs[0])
+                data_tuple = (kwargs['data'][1], kwargs['data'][2], kwargs['data'][3], kwargs['data'][0])
 
                 cur = self.__conn.cursor()
                 cur.execute(update_query, data_tuple)
                 self.__conn.commit()
+                print("Data updated")
         except sqlite3.Error as e:
             print("Failed to update data to table", e)
+            return None
+    
+    def delete_by_id(self, **kwargs):
+        """ Delete data by id 
+        :param **kwargs: keyword arguments
+        :return:
+        """
+        try:
+            if kwargs['id']:
+                delete_by_id = """ DELETE FROM password_manager WHERE id=?"""
+
+                cur = self.__conn.cursor()
+                cur.execute(delete_by_id, (kwargs['id'],))
+                self.__conn.commit()
+                print("Data deleted")
+        except sqlite3.Error as e:
+            print("Failed to delete data on table", e)
             return None
         
     
