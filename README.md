@@ -1,24 +1,37 @@
 # Password-manager
 This password manager system is to help with login information management. 
 
-# Things to do
-* [Objective](#objective)
-* [Instructions](#instructions)
-* [Create password class (menu)](#menu)
+# Table of Contents
+* [General Info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Notes](#note)
 
-# Objective
-To create a simple functional user interface (UI) on the terminal.
+## General info
+This project is a password manager vault system to help with login information create with Python, SQLite and Cryptography.
+The aim of this project is to help with password and login information management.
 
-# Instructions
-Your task is to design the menu for the simple functional UI for the password manager system. <br>
-For more detail on what to do refer to [menu](#menu). <br>
-To start working on this project, please fork the repository before cloning and push it to your branch.<br>
-After you are done with your code, create a pull request and i will validate it and merge it onto the main branch.
+##
+Project is create with :
+* Python version: 3.10.0
+* SQLite version: 2.6.0
+* Cryptography version: 37.0.4
+* Prettytable version: 3.4.1
+* Pyfiglet version: 0.8.post1
+* Python-dotenv version: 0.20.0
+* Termcolor version: 1.1.0
 
-# Menu
-#### Before the main function you will have to create a validation and creation function for the creation of master password and validating subsequent login.<br>
-#### Main function to note is the menu function which will continuously prompt the user until user input a certain input to stop the program.<br>
-#### All functions that is provided has already been documented for you.
+## Setup
+To run this project:
+Download the source code [here](https://github.com/Cyrof/Password-manager/releases/tag/V0.1.0), unzip the source code run the following code
+```console
+root@localhost~$ python setup.py install
+```
+After installing, to start the password manager program run the following code
+``` console
+root@localhost~$ psv
+```
+The program will then be as [such](expected-output) 
 
-## Expected output will be as such
+## Expected output
 ![Expected output](https://github.com/Cyrof/Password-manager/blob/main/image.png)
