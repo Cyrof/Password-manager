@@ -132,3 +132,6 @@ dist
 psmanager
 .env
 password.db
+build/
+PSVault.egg-info/
+ps.env

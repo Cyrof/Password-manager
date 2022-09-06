@@ -11,7 +11,7 @@ readme = os.path.join(this_folder, 'README.md')
 license = os.path.join(this_folder, 'LICENSE')
 
 setuptools.setup(
-    name="PSV",
+    name="PSVault",
     version="0.1",
     description="Password manager vault",
     author="Keith Neo",
@@ -25,11 +25,12 @@ setuptools.setup(
     ],
     url="https://github.com/Cyrof/Password-manager",
     py_modules=["main"],
+    packages=setuptools.find_packages(),
     install_requires=["cryptography==37.0.4", "prettytable==3.4.1", "pyfiglet==0.8.post1", "python-dotenv==0.20.0", "termcolor==1.1.0"],
     python_requires=">=3.10",
     entry_points={
         'console_scripts' : [
-            'psv = main:cmd'
+            'psv = main:run'
         ]
     },
 )

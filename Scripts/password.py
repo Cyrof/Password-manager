@@ -45,18 +45,21 @@ class PS:
         :return:
         """
         self.welcome()
-        while True:
-            print(colored("To start, you will have to create a master password. Be careful not to lose it as it is unrecoverable.", 'green'))
-            m_ps = getpass.getpass(colored("Create a master password for the program:", 'white'))
-            verify_m_ps = getpass.getpass(colored("Verify your master password:", 'white'))
-            if m_ps == verify_m_ps:
-                self.create_master_ps(mps=m_ps)
-                tick = u'\u2713'
-                print(colored(f"{tick} Thank you! Restart the program and enter your master password to begin.", 'green'))
-                break
-            else:
-                print(colored("X Password do not match. Please try agian X", 'red'))
-                continue
+        try:
+            while True:
+                print(colored("To start, you will have to create a master password. Be careful not to lose it as it is unrecoverable.", 'green'))
+                m_ps = getpass.getpass(colored("Create a master password for the program:", 'white'))
+                verify_m_ps = getpass.getpass(colored("Verify your master password:", 'white'))
+                if m_ps == verify_m_ps:
+                    self.create_master_ps(mps=m_ps)
+                    tick = u'\u2713'
+                    print(colored(f"{tick} Thank you! Restart the program and enter your master password to begin.", 'green'))
+                    break
+                else:
+                    print(colored("X Password do not match. Please try agian X", 'red'))
+                    continue
+        except KeyboardInterrupt:
+            pass
 
     def create_master_ps(self, **kwargs):
         """ Create master pass if not found 

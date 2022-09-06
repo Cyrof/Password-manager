@@ -13,8 +13,8 @@ class Crypt:
     """
     def __init__(self):
         self.check_env()
-        self.dotenv_file = find_dotenv()
-        load_dotenv(self.dotenv_file)
+        self.__filepath = os.path.abspath("ps.env")
+        load_dotenv(self.__filepath)
         
 
     def check_env(self):
@@ -22,7 +22,7 @@ class Crypt:
         :param:
         :return:
         """
-        with open(".env", "a") as f:
+        with open("ps.env", "a") as f:
             f.close()
     
     def does_key_exist(self):
