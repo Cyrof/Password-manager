@@ -1,17 +1,18 @@
-# Password-manager
-This password manager system is to help with login information management. 
+# Password Manager Vault
+
+### This password manager system is to help with login information management. 
 
 # Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
-* [Notes](#note)
+* [Notes](#notes)
 
 ## General info
 This project is a password manager vault system to help with login information create with Python, SQLite and Cryptography.
 The aim of this project is to help with password and login information management.
 
-##
+## Technologies
 Project is create with :
 * Python version: 3.10.0
 * SQLite version: 2.6.0
@@ -35,3 +36,8 @@ The program will then be as [such](expected-output)
 
 ## Expected output
 ![Expected output](https://github.com/Cyrof/Password-manager/blob/main/image.png)
+
+## Notes 
+Implement the code to your system at your own ricks as it is not guarantee to be the correct and efficient. <br>
+
+If there are any additional features that you would like to see be included or bugs to fix, please let me know by creating an issue.
