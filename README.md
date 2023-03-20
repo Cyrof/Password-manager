@@ -7,6 +7,7 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Notes](#notes)
+* [IMPORTANT](#important)
 
 ## General info
 This project is a password manager vault system to help with login information create with Python, SQLite and Cryptography.
@@ -41,3 +42,8 @@ The program will then be as [such](expected-output)
 Implement the code to your system at your own ricks as it is not guarantee to be the correct and efficient. <br>
 
 If there are any additional features that you would like to see be included or bugs to fix, please let me know by creating an issue.
+
+# IMPORTANT
+### This Password Manager project is outdated. </br>
+### There is a new and up to date password manager program which has been released on (03/20/2023). </br>
+### Click [here](https://github.com/Cyrof/password_manager_2.0) to go to it.
