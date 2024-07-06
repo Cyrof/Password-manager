@@ -1,3 +1,5 @@
+# A new updated [Password Vault](https://github.com/Cyrof/password_manager_2.0) has been created. Therefore, this repository will be archived.
+
 # Password Manager Vault
 
 ### This password manager system is to help with login information management. 
